@@ -8,6 +8,7 @@
 from itemadapter import ItemAdapter
 import psycopg2
 
+# TODO: Update with MongoDB connection (Optional)
 
 class JobsProjectPipeline:
 

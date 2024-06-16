@@ -1,3 +1,5 @@
+# TODO: Check connections and working of the services
+
 name: decanaria-pipeline
 
 services:

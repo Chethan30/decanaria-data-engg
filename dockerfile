@@ -1,3 +1,5 @@
+# TODO: Run tests in a separate container
+
 FROM python:3.11.3-slim-buster
 
 WORKDIR /app
