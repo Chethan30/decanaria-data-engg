@@ -5,33 +5,38 @@ name: decanaria-pipeline
 services:
   scrapy:
     build: .
-    environment:
-      - SCRAPY_SETTINGS_MODULE=decanaria.settings
     volumes:
-      - ./:/code
+      - ./:/app
     depends_on:
-      - redis
       - postgresql
-      - mongodb
+      # - redis
+      # - mongodb
 
   postgresql:
     image: postgres:latest
     environment:
-      - POSTGRES_PASSWORD=value
-      - POSTGRES_USER=value
-    volumes:
-      - postgresql_data:/var/lib/postgresql/data
+      # - POSTGRES_NAME=jobs_project
+      - POSTGRES_DB=jobs_project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    ports:
+      - "5432:5432"
+    # volumes:
+    #   - postgresql_data:/var/lib/postgresql/data
 
-  redis:
-    image: redis:latest
+  # redis:
+  #   image: redis:latest
 
-  mongodb:
-    image: mongo:latest
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=your_username
-      - MONGO_INITDB_ROOT_PASSWORD=your_password
-    volumes:
-      - mongodb_data:/data/db
+  # mongodb:
+  #   image: mongo:latest
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=your_username
+  #     - MONGO_INITDB_ROOT_PASSWORD=your_password
+
+  # volumes:
+  #   - mongodb_data:/data/db
 # volumes:
 #   postgresql_data: {}
 #   mongodb_data: {}
