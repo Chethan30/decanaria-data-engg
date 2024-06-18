@@ -1,13 +1,12 @@
-# TODO: Run tests in a separate container
-
 FROM python:3.10-slim-bullseye
 
 WORKDIR /app
 
-# RUN pip install scrapy psycopg2 pymongo
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && pip install psycopg2
+
+RUN pip install pymongo
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt

@@ -7,20 +7,30 @@ class Jobspider(scrapy.Spider):
     name = 'job_spider'
     custom_settings =  {
         'ITEM_PIPELINES': {
-            'jobs_project.pipelines.JobsProjectPipeline': 300
+            'jobs_project.pipelines.JobsProjectPipeline': 300,
+            'jobs_project.pipelines.JobsProjectMongoPipeline': 400
         }
     }
 
     def __init__(self, **kwargs):
+        """
+        Initialize json_paths with relative paths
+        """
         self.json_paths = ['app/data_src/s01.json', 'app/data_src/s02.json']
         pass
 
     def start_requests(self):
+        """
+        Start request for each json file
+        """
         for json_path in self.json_paths:
             url = f'file:///{json_path}'
             yield scrapy.Request( url=url, callback=self.parse_page)
 
     def parse_page(self, response):
+        """
+        Parse json response and yield items
+        """
         data = json.loads(response.text)
         jobs = data['jobs']
         
@@ -31,6 +41,13 @@ class Jobspider(scrapy.Spider):
             yield item
 
 def create_item(item, job_data):
+    """
+    Create item from job_data by
+    - copying the key value pair from job_data to item
+    - inspecting data type and converting to string
+    - cleaning the string
+    - marking NULL values with NA
+    """
     for key in job_data:
         value = job_data.get(key)
         if isinstance(value, str):
@@ -42,7 +59,6 @@ def create_item(item, job_data):
                 convert_with_type_check = lambda item: ", ".join(list(item.values())) if isinstance(item, (dict)) else clean_string(str(item))
                 str_value = ', '.join(convert_with_type_check(item) for item in value)
                 item[key] = str_value
-            print("---THERE---", type(value), value, "-----", item[key])
         elif isinstance(value, dict):
             item[key] = ", ".join(list(item.values()))
         else:
