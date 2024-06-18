@@ -52,6 +52,14 @@ The pipeline process is simple at a glance, but houses its own complexities spec
 2. **Item Pipeline**: The item pipeline is responsible for processing the data and storing it in the database. This requires 2 key classes, the Item and the Pipeline. The Item class is responsible for defining the data structure and the Pipeline class is responsible for logic for processing the data and storing it in the database. Here, the data is stored in both Postgres and MongoDB databases. This is where we handle the data transformation and data cleaning.
 3. **Database**: The data is stored in both Postgres and MongoDB databases for further processing, applications and retrival. The data can be viewed by ssh-ing into the respective containers and running the commands mentioned above.
 
+## Infrastructure
+
+We reply on docker and comos to set up a mini-service architecture. The services are as follows:
+
+- **Postgres**: The Postgres database is used to store the data in a structured manner. The data is stored in a table called `raw_table`.
+- **MongoDb**: The MongoDB database is used to store the data in a semi-structured manner. The data is stored in a collection called `raw_collection`.
+- **Scrapy**: The Scrapy service is used to run the spider and scrape the data from the website. The data is then processed and stored in the databases.
+
 ## Future Scope
 
 1. **Data Cleaning and Transformation**: The data cleaning process can be further enhanced by adding more data cleaning steps and handling more edge cases.
@@ -59,3 +67,8 @@ The pipeline process is simple at a glance, but houses its own complexities spec
 3. **Security**: Adidng more encryption measures, like,
    - Encrypting the data before storing it in the database.
    - Storing environment variables in a more secure manner using env_vars and secrets.
+
+## Contributors
+
+- Past experience as an Infastructure engineer, handling builds, cotiainerization, deploments and more.
+- Experience building a custom serach engine, using scrapy to crawl and scrape over 100M sites, clustering data with K-means, using relevance vector models and more.
